@@ -3,6 +3,8 @@ from timm.loss import LabelSmoothingCrossEntropy, SoftTargetCrossEntropy
 from timm.data import Mixup
 
 
+__all__ = ['build_criterion']
+
 def build_criterion(mixup, label_smoothing):
     mixup_fn = None
     if mixup > 0.:

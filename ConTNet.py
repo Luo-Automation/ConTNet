@@ -5,14 +5,12 @@ import torch
 from einops.layers.torch import Rearrange
 from einops import rearrange
 
-import numpy as np
-
 from typing import Any, List
 import math
 import warnings
 from collections import OrderedDict
 
-__all__ = ['ConTBlock', 'ConTNet']
+__all__ = ['ConTBlock', 'ConTNet', 'create_ConTNet_S']
 
 
 r""" The following trunc_normal method is pasted from timm https://github.com/rwightman/pytorch-image-models/tree/master/timm      
@@ -68,8 +66,8 @@ def trunc_normal_(tensor, mean=0., std=1., a=-2., b=2.):
         a: the minimum cutoff value
         b: the maximum cutoff value
     Examples:
-        >>> w = torch.empty(3, 5)
-        >>> nn.init.trunc_normal_(w)
+        >> w = torch.empty(3, 5)
+        >> nn.init.trunc_normal_(w)
     """
     return _no_grad_trunc_normal_(tensor, mean, std, a, b)
 
@@ -454,7 +452,7 @@ def create_ConTNet_S(kwargs):
                    dropout=[0,0,0,0], 
                    inplanes=64, 
                    layers=[1,1,1,1], 
-                   last_dropout=0, 
+                   last_dropout=0,
                    **kwargs)
 
 def create_ConTNet_M(kwargs):
@@ -484,7 +482,7 @@ def build_model(arch, use_avgdown, relative, qkv_bias, pre_norm):
     return func(kwargs)
 
 if __name__ == "__main__":
-    model = build_model(arch='ConT-Ti', use_avgdown=True, relative=True, qkv_bias=True, pre_norm=True)
+    model = build_model(arch='ConT-S', use_avgdown=True, relative=True, qkv_bias=True, pre_norm=True)
     input = torch.Tensor(4, 3, 224, 224)
     print(model)
     out = model(input)
