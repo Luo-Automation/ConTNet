@@ -477,7 +477,7 @@ def create_ConTNet_B(kwargs):
 
 def build_model(arch, use_avgdown, relative, qkv_bias, pre_norm):
     type = arch.split('-')[-1]
-    func = eval(f'create_ConTNet_{type}')
+    func = eval(f'create_ConTNet_{type}')  # FIXME: why not use a dict of configs instead of the series of create_ConTNet_*() functions above?
     kwargs = dict(use_avgdown=use_avgdown, relative=relative, qkv_bias=qkv_bias, pre_norm=pre_norm)
     return func(kwargs)
 
